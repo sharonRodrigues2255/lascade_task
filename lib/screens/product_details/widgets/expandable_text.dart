@@ -6,11 +6,10 @@ class ExpandableText extends StatefulWidget {
   final String text;
   final int maxLines;
 
-  const ExpandableText({
-    Key? key,
+  const ExpandableText({super.key, 
     required this.text,
     this.maxLines = 2, 
-  }) : super(key: key);
+  });
 
   @override
   State<ExpandableText> createState() => _ExpandableTextState();
@@ -25,7 +24,6 @@ class _ExpandableTextState extends State<ExpandableText> {
       builder: (context, constraints) {
         final textStyle = myFontStyle(size: 16, color: ColorsConst.colorFromHex('#748189'));
 
-        // Measure the full text
         final textPainter = TextPainter(
           text: TextSpan(text: widget.text, style: textStyle),
           maxLines: widget.maxLines,

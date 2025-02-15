@@ -26,10 +26,33 @@ Future<List<ProductModel>> fetchProducts() async {
       return products;
     } else {
       throw AppException(
-          response.fail?.message.toString() ?? "Unknown error", 'fetch products');
+          response.fail?.message.toString() ?? "Unknown error", 'products');
     }
   } catch (e) {
-    throw AppException(e.toString(), 'fetch products');
+    throw AppException(e.toString(), 'Network');
+  }
+}
+
+Future<List<String>> fetchCategories() async {
+  cancelToken = CancelToken();
+  try {
+    var response = await apiService.getAPIResponse(
+      AppUrls.categories,
+      null,
+      cancelToken,
+    );
+
+    if (response.success != null) {
+      final List<dynamic> jsonList = response.success!.response.data;
+      final List<String> categories = jsonList.map((e) => e.toString()).toList();
+
+      return categories;
+    } else {
+      throw AppException(
+          response.fail?.message.toString() ?? "Unknown error", 'categories list');
+    }
+  } catch (e) {
+    throw AppException(e.toString(), 'Network');
   }
 }
 

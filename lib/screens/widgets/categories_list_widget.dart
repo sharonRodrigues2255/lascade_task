@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:lascade_task/core/helpers/colors.dart';
 import 'package:lascade_task/core/helpers/size_config.dart';
 import 'package:lascade_task/core/helpers/text_style.dart';
+import 'package:lascade_task/providers/home_screen_provider/home_screen_async_provider.dart';
 
 class CategoriesListWidget extends StatelessWidget {
-  const CategoriesListWidget({super.key});
+  final HomeScreenAsyncProvider provider;
+  const CategoriesListWidget({super.key,required this.provider});
 
   @override
   Widget build(BuildContext context) {
+    final categories = provider.categories;
     return SizedBox(
       height: 41.0.h,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        itemCount: 10,
+        itemCount: categories?.length??0,
         itemBuilder: (context, index) => Container(
           height: 41.0.h,
           width: 119.0.w,
@@ -21,7 +24,7 @@ class CategoriesListWidget extends StatelessWidget {
               color: ColorsConst.colorFromHex('#70B9BE')),
           child: Center(
             child: Text(
-              "BreakFast",
+              categories?[index]??'',
               style: myFontStyle(color: Colors.white),
             ),
           ),
