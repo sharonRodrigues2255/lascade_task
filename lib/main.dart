@@ -6,7 +6,7 @@ import 'package:lascade_task/screens/landing_screen/landing_screen.dart';
 void main() {
   runApp(const MyApp());
 }
-final rootNavigatorKey = GlobalKey<NavigatorState>();
+// final rootNavigatorKey = GlobalKey<NavigatorState>();
 
 
 class MyApp extends StatelessWidget {
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
      SizeConfig.init(context);
-    return MaterialApp(navigatorKey: rootNavigatorKey,
+    return MaterialApp(
       title: 'Lascade Application',
       theme: ThemeData(fontFamily: FontConst.fontFamily,
       ),

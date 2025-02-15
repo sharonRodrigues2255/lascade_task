@@ -72,7 +72,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 24,
+                  height: 24.0.h,
                 ),
                 Row(
                   children: [
@@ -89,8 +89,8 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                GridView.builder(shrinkWrap: true,physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(childAspectRatio: 156/198,
+                GridView.builder(itemCount: 10,shrinkWrap: true,physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(childAspectRatio: 156.0.w/222.0.h,
                       crossAxisCount: 2),
                   itemBuilder: (context, index) => Container(
                         decoration: BoxDecoration(boxShadow: [
@@ -102,7 +102,7 @@ class ProfileScreen extends StatelessWidget {
                           ),
                         ], color: Colors.white),
                         child: Padding(
-                          padding: const EdgeInsets.all(16.0),
+                          padding:  EdgeInsets.all(16.0.h),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -113,17 +113,17 @@ class ProfileScreen extends StatelessWidget {
                                     color: Colors.red,
                                     borderRadius: BorderRadius.circular(20)),
                               ),
-                              const SizedBox(height: 12),
+                               SizedBox(height: 12.0.h,),
                               SizedBox(
-                                  width: 168,
+                                  width: 168.0.w,
                                   child: Text(
                                     "Healthy Taco Salad with fresh vegetable",
                                     style: myFontStyle(
                                         weight: FontWeight.w700, size: 16),
                                     maxLines: 2,
                                   )),
-                              const SizedBox(
-                                height: 12,
+                               SizedBox(
+                                height: 12.0.h,
                               ),
                               Row(mainAxisAlignment: MainAxisAlignment.start,
                                   children: [     CircleAvatar(
@@ -142,8 +142,8 @@ class ProfileScreen extends StatelessWidget {
                                     style: myFontStyle(color: ColorsConst.colorFromHex('#97A2B0')),
                                   ),],
                                 ),
-                              const SizedBox(
-                                height: 12,
+                               SizedBox(
+                                height: 12.0.h,
                               ),
                             ],
                           ),
