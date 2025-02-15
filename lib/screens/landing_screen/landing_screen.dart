@@ -6,8 +6,10 @@ import 'package:lascade_task/screens/home_screen/home_screen.dart';
 import 'package:lascade_task/screens/notifications_screen/notifications_screen.dart';
 import 'package:lascade_task/screens/profile_screen/profile_screen.dart';
 import 'package:lascade_task/screens/search_screen/search_screen.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/consts/icons_consts.dart';
+import '../../providers/home_screen_provider/home_screen_async_provider.dart';
 
 class LandingScreen extends StatefulWidget {
   const LandingScreen({super.key});
@@ -50,26 +52,29 @@ class _LandingScreenState extends State<LandingScreen> {
         index: _bottomIndex,
         children: pages,
       ),
-      bottomNavigationBar:AnimatedBottomNavigationBar.builder(
-  height: 50,
-  leftCornerRadius: 20,
-  rightCornerRadius: 20,
-  elevation: 5,
-  backgroundColor: ColorsConst.colorFromHex('#FFFFFF'),
-  itemCount: icons.length,
-  tabBuilder: (index, isActive) => Center(
-    child: SvgPicture.asset(
-      isActive ? activeIcons[index] : icons[index],
-      width: 24,
-      height: 24,
-      fit: BoxFit.none,
-    ),
-  ),
-  activeIndex: _bottomIndex,
-  gapLocation: GapLocation.center,
-  notchSmoothness: NotchSmoothness.defaultEdge,
-  onTap: (index) => setState(() => _bottomIndex = index),
-),
+      bottomNavigationBar:IgnorePointer(
+        ignoring: Provider.of<HomeScreenAsyncProvider>(context).isLoading|| Provider.of<HomeScreenAsyncProvider>(context).productError!=null,
+        child: AnimatedBottomNavigationBar.builder(
+          height: 50,
+          leftCornerRadius: 20,
+          rightCornerRadius: 20,
+          elevation: 5,
+          backgroundColor: ColorsConst.colorFromHex('#FFFFFF'),
+          itemCount: icons.length,
+          tabBuilder: (index, isActive) => Center(
+            child: SvgPicture.asset(
+        isActive ? activeIcons[index] : icons[index],
+        width: 24,
+        height: 24,
+        fit: BoxFit.none,
+            ),
+          ),
+          activeIndex: _bottomIndex,
+          gapLocation: GapLocation.center,
+          notchSmoothness: NotchSmoothness.defaultEdge,
+          onTap: (index) => setState(() => _bottomIndex = index),
+        ),
+      ),
 
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.black,
