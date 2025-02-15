@@ -160,74 +160,82 @@ class _HomeScreenState extends State<HomeScreen> {
 
               return Stack(
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: ColorsConst.colorFromHex('1A063336'),
-                          blurRadius: 5,
-                          spreadRadius: 5,
-                          offset: const Offset(0, 0),
-                        ),
-                      ],
-                      color: Colors.white,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: CachedNetworkImage(
-                              imageUrl: product.image ?? "",
-                              width: 168.0.w,
-                              height: 128.0.h,
-                              fit: BoxFit.cover,
-                              placeholder: (context, url) =>
-                                  Center(child: CircularProgressIndicator()),
-                              errorWidget: (context, url, error) =>
-                                  Icon(Icons.error, color: Colors.red),
-                            ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ProductDetails(
+                                product: product,
+                              )));
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: ColorsConst.colorFromHex('1A063336'),
+                            blurRadius: 5,
+                            spreadRadius: 5,
+                            offset: const Offset(0, 0),
                           ),
-                          const SizedBox(height: 12),
-                          SizedBox(
-                            width: 168,
-                            child: Text(
-                              product.title ?? "Unknown Recipe",
-                              style: myFontStyle(
-                                  weight: FontWeight.w700, size: 16),
-                              maxLines: 2,
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          Row(
-                            children: [
-                              SvgPicture.asset(IconsConsts.calorieIcon),
-                              const SizedBox(width: 8),
-                              Text("120 Kcal",
-                                  style: myFontStyle(
-                                      color:
-                                          ColorsConst.colorFromHex("#97A2B0"))),
-                              const SizedBox(width: 8),
-                              CircleAvatar(
-                                  radius: 3,
-                                  backgroundColor:
-                                      ColorsConst.colorFromHex("#97A2B0")),
-                              const SizedBox(width: 8),
-                              Icon(Icons.access_time,
-                                  size: 16,
-                                  color: ColorsConst.colorFromHex("#97A2B0")),
-                              const SizedBox(width: 8),
-                              Text("120 Min",
-                                  style: myFontStyle(
-                                      color:
-                                          ColorsConst.colorFromHex("#97A2B0"))),
-                            ],
-                          ),
-                          const SizedBox(height: 12),
                         ],
+                        color: Colors.white,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: CachedNetworkImage(
+                                imageUrl: product.image ?? "",
+                                width: 168.0.w,
+                                height: 128.0.h,
+                                fit: BoxFit.cover,
+                                placeholder: (context, url) =>
+                                    Center(child: CircularProgressIndicator()),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error, color: Colors.red),
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            SizedBox(
+                              width: 168,
+                              child: Text(
+                                product.title ?? "Unknown Recipe",
+                                style: myFontStyle(
+                                    weight: FontWeight.w700, size: 16),
+                                maxLines: 2,
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            Row(
+                              children: [
+                                SvgPicture.asset(IconsConsts.calorieIcon),
+                                const SizedBox(width: 8),
+                                Text("120 Kcal",
+                                    style: myFontStyle(
+                                        color:
+                                            ColorsConst.colorFromHex("#97A2B0"))),
+                                const SizedBox(width: 8),
+                                CircleAvatar(
+                                    radius: 3,
+                                    backgroundColor:
+                                        ColorsConst.colorFromHex("#97A2B0")),
+                                const SizedBox(width: 8),
+                                Icon(Icons.access_time,
+                                    size: 16,
+                                    color: ColorsConst.colorFromHex("#97A2B0")),
+                                const SizedBox(width: 8),
+                                Text("120 Min",
+                                    style: myFontStyle(
+                                        color:
+                                            ColorsConst.colorFromHex("#97A2B0"))),
+                              ],
+                            ),
+                            const SizedBox(height: 12),
+                          ],
+                        ),
                       ),
                     ),
                   ),

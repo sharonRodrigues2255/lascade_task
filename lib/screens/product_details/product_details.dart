@@ -251,7 +251,12 @@ Widget _buildProductInfo(ProductModel product) {
                   scrollDirection: Axis.horizontal,
                   itemCount: provider.products?.length ?? 0,
                   itemBuilder: (context, index) =>
-                      RecipiesSmallCard(product: provider.products![index]),
+                      GestureDetector(onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ProductDetails(
+                          product: product,
+                        )));
+                      },child: RecipiesSmallCard(product: provider.products![index])),
                   separatorBuilder: (context, index) =>
                       const SizedBox(width: 16),
                 );

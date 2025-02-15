@@ -7,6 +7,7 @@ import 'package:lascade_task/core/helpers/text_style.dart';
 import 'package:lascade_task/models/product_model.dart';
 import 'package:lascade_task/providers/search_provider/search_provider.dart';
 import 'package:lascade_task/screens/home_screen/widgets/medium_title_widget.dart';
+import 'package:lascade_task/screens/product_details/product_details.dart';
 import 'package:lascade_task/screens/widgets/categories_list_widget.dart';
 import 'package:lascade_task/screens/widgets/recipies_small_card.dart';
 import 'package:provider/provider.dart';
@@ -114,8 +115,16 @@ class _SearchScreenState extends State<SearchScreen> {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: provider.products?.length ?? 0,
-        itemBuilder: (context, index) => RecipiesSmallCard(
-          product: provider.products?[index] ?? ProductModel(),
+        itemBuilder: (context, index) => GestureDetector(
+          onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ProductDetails(
+                          product: provider.products?[index] ?? ProductModel(),
+                        )));
+          },
+          child: RecipiesSmallCard(
+            product: provider.products?[index] ?? ProductModel(),
+          ),
         ),
         separatorBuilder: (context, index) => SizedBox(width: 16),
       ),
@@ -133,50 +142,58 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Widget _buildEditorsChoiceCard(ProductModel product) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 24),
-      child: Card(
-        elevation: 2,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 8, top: 8, bottom: 8, right: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: CachedNetworkImage(
-                  imageUrl: product.image ?? "",
-                  height: 84,
-                  width: 100,
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                  errorWidget: (context, url, error) => Icon(Icons.error, color: Colors.red),
-                ),
-              ),
-              SizedBox(width: 16),
-              Column(
-                children: [
-                  SizedBox(
-                    width: 130,
-                    child: Text(
-                      product.title ?? "Unknown Product",
-                      maxLines: 2,
-                      style: myFontStyle(weight: FontWeight.w700, size: 16),
-                    ),
+    return GestureDetector(
+      onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ProductDetails(
+                          product: product,
+                        )));
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(right: 24),
+        child: Card(
+          elevation: 2,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8, top: 8, bottom: 8, right: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: CachedNetworkImage(
+                    imageUrl: product.image ?? "",
+                    height: 84,
+                    width: 100,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                    errorWidget: (context, url, error) => Icon(Icons.error, color: Colors.red),
                   ),
-                  SizedBox(height: 8),
-                  Row(
-                    children: [
-                      CircleAvatar(radius: 10, backgroundColor: Colors.white, child: CircleAvatar(radius: 9, backgroundColor: Colors.black)),
-                      SizedBox(width: 8),
-                      Text("James Spader", style: myFontStyle(color: ColorsConst.colorFromHex('#97A2B0'))),
-                    ],
-                  )
-                ],
-              ),
-              const Spacer(),
-              SvgPicture.asset(IconsConsts.gotoIcon)
-            ],
+                ),
+                SizedBox(width: 16),
+                Column(
+                  children: [
+                    SizedBox(
+                      width: 130,
+                      child: Text(
+                        product.title ?? "Unknown Product",
+                        maxLines: 2,
+                        style: myFontStyle(weight: FontWeight.w700, size: 16),
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Row(
+                      children: [
+                        CircleAvatar(radius: 10, backgroundColor: Colors.white, child: CircleAvatar(radius: 9, backgroundColor: Colors.black)),
+                        SizedBox(width: 8),
+                        Text("James Spader", style: myFontStyle(color: ColorsConst.colorFromHex('#97A2B0'))),
+                      ],
+                    )
+                  ],
+                ),
+                const Spacer(),
+                SvgPicture.asset(IconsConsts.gotoIcon)
+              ],
+            ),
           ),
         ),
       ),

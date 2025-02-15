@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lascade_task/core/helpers/size_config.dart';
 import 'package:lascade_task/core/helpers/text_style.dart';
+import 'package:lascade_task/screens/product_details/product_details.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/consts/icons_consts.dart';
@@ -118,68 +119,76 @@ class ProfileScreen extends StatelessWidget {
             final product = favorites[index];
             return Stack(
               children: [
-                Container(
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: ColorsConst.colorFromHex('1A063336'),
-                        blurRadius: 5,
-                        spreadRadius: 5,
-                        offset: const Offset(0, 0),
-                      ),
-                    ],
-                    color: Colors.white,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(16.0.h),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          
-                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12),),
-                          child: CachedNetworkImage(
-                            imageUrl: product.image ?? "",
-                            width: 132.0.w,
-                            height: 88.0.h,
-                            fit: BoxFit.cover,
-                            placeholder: (context, url) =>
-                                const Center(child: CircularProgressIndicator()),
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.error),
-                          ),
+                GestureDetector(
+                  onTap: () {
+                       Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ProductDetails(
+                          product: product,
+                        )));
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: ColorsConst.colorFromHex('1A063336'),
+                          blurRadius: 5,
+                          spreadRadius: 5,
+                          offset: const Offset(0, 0),
                         ),
-                        SizedBox(height: 12.0.h),
-                        Text(
-                          product.title??"",
-                          style: myFontStyle(weight: FontWeight.w700, size: 16),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        SizedBox(height: 12.0.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                             CircleAvatar(
-                                                backgroundImage: NetworkImage(ImageConsts.jamesSpaderImage),        
-
-                              radius: 10,
-                              backgroundColor: Colors.white,
-                              child: CircleAvatar(
-                                radius: 9,
-                                backgroundImage: NetworkImage(ImageConsts.jamesSpaderImage),        
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            Text(
-                              "James Spader",
-                              style: myFontStyle(
-                                  color: ColorsConst.colorFromHex('#97A2B0')),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 12.0.h),
                       ],
+                      color: Colors.white,
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(16.0.h),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            
+                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(12),),
+                            child: CachedNetworkImage(
+                              imageUrl: product.image ?? "",
+                              width: 132.0.w,
+                              height: 88.0.h,
+                              fit: BoxFit.cover,
+                              placeholder: (context, url) =>
+                                  const Center(child: CircularProgressIndicator()),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                            ),
+                          ),
+                          SizedBox(height: 12.0.h),
+                          Text(
+                            product.title??"",
+                            style: myFontStyle(weight: FontWeight.w700, size: 16),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          SizedBox(height: 12.0.h),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                               CircleAvatar(
+                                                  backgroundImage: NetworkImage(ImageConsts.jamesSpaderImage),        
+                  
+                                radius: 10,
+                                backgroundColor: Colors.white,
+                                child: CircleAvatar(
+                                  radius: 9,
+                                  backgroundImage: NetworkImage(ImageConsts.jamesSpaderImage),        
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                "James Spader",
+                                style: myFontStyle(
+                                    color: ColorsConst.colorFromHex('#97A2B0')),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 12.0.h),
+                        ],
+                      ),
                     ),
                   ),
                 ),
