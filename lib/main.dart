@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:lascade_task/core/consts/font_const.dart';
 import 'package:lascade_task/core/helpers/size_config.dart';
+import 'package:lascade_task/providers/home_screen_provider/home_screen_async_provider.dart';
 import 'package:lascade_task/screens/landing_screen/landing_screen.dart';
+import 'package:provider/provider.dart';
+
 
 void main() {
   runApp(const MyApp());
 }
-// final rootNavigatorKey = GlobalKey<NavigatorState>();
+final rootNavigatorKey = GlobalKey<NavigatorState>();
 
 
 class MyApp extends StatelessWidget {
@@ -14,11 +17,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
      SizeConfig.init(context);
-    return MaterialApp(
-      title: 'Lascade Application',
-      theme: ThemeData(fontFamily: FontConst.fontFamily,
-      ),
-      home: const LandingScreen(),
+    return MultiProvider(
+    providers: [ChangeNotifierProvider(create: (context) => HomeScreenAsyncProvider())],
+      child: MaterialApp(
+          navigatorKey: rootNavigatorKey,
+          title: 'Lascade Application',
+          theme: ThemeData(fontFamily: FontConst.fontFamily,
+          ),
+          home: const LandingScreen(),
+        ),
     );
   }
 }
