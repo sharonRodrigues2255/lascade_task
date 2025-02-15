@@ -41,15 +41,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       body: isLoading
-            ? const Center(child: CircularProgressIndicator())
-            : provider.productError != null
-                ? TryAgainScreen(
-                    recall: () {
-                      provider.fetchProducts();
-                    },
-                    error: provider.productError??"")
-                :  SafeArea(
-        child:SingleChildScrollView(
+          ? const Center(child: CircularProgressIndicator())
+          : provider.productError != null
+              ? TryAgainScreen(
+                  recall: () {
+                    provider.fetchProducts();
+                  },
+                  error: provider.productError ?? "")
+              : SafeArea(
+                  child: SingleChildScrollView(
                     child: Padding(
                       padding: const EdgeInsets.only(top: 12, left: 24),
                       child: Column(
@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-      ),
+                ),
     );
   }
 
@@ -98,10 +98,14 @@ class _HomeScreenState extends State<HomeScreen> {
         separatorBuilder: (context, index) => const SizedBox(width: 8),
         itemBuilder: (context, index) {
           final product = products[index];
-          return GestureDetector(onTap:(){
-              Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) =>  ProductDetails(product: product,)));
-          } ,child: CarouselContainerWidget(prduct: product));
+          return GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ProductDetails(
+                          product: product,
+                        )));
+              },
+              child: CarouselContainerWidget(prduct: product));
         },
       ),
     );
@@ -125,107 +129,143 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         provider.categories == null
             ? const Center(child: Text("No Categories"))
-            :
-        CategoriesListWidget(provider: provider ),
+            : CategoriesListWidget(provider: provider),
       ],
     );
   }
-Widget _popularRecipesSection(List<ProductModel> products) {
-  return Column(
-    children: [
-      Row(
-        children: [
-          MediumTitleWidget(title: "Popular Recipes"),
-          const Spacer(),
-          Text(
-            'See All',
-            style: myFontStyle(
-                weight: FontWeight.w800,
-                color: ColorsConst.colorFromHex('#70B9BE')),
-          ),
-          const SizedBox(width: 23),
-        ],
-      ),
-      SizedBox(
-        height: 290.0.h,
-        child: ListView.separated(
-          itemCount: products.length,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) {
-            final product = products[index];
 
-            return Container(
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: ColorsConst.colorFromHex('1A063336'),
-                    blurRadius: 5,
-                    spreadRadius: 5,
-                    offset: const Offset(0, 0),
-                  ),
-                ],
-                color: Colors.white,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: CachedNetworkImage(
-                        imageUrl: product.image ?? "",
-                        width: 168.0.w,
-                        height: 128.0.h,
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) =>
-                            Center(child: CircularProgressIndicator()),
-                        errorWidget: (context, url, error) =>
-                            Icon(Icons.error, color: Colors.red),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    SizedBox(
-                      width: 168,
-                      child: Text(
-                        product.title ?? "Unknown Recipe",
-                        style: myFontStyle(weight: FontWeight.w700, size: 16),
-                        maxLines: 2,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      children: [
-                        SvgPicture.asset(IconsConsts.calorieIcon),
-                        const SizedBox(width: 8),
-                        Text("120 Kcal",
-                            style: myFontStyle(
-                                color: ColorsConst.colorFromHex("#97A2B0"))),
-                        const SizedBox(width: 8),
-                        CircleAvatar(
-                            radius: 3,
-                            backgroundColor:
-                                ColorsConst.colorFromHex("#97A2B0")),
-                        const SizedBox(width: 8),
-                        Icon(Icons.access_time,
-                            size: 16,
-                            color: ColorsConst.colorFromHex("#97A2B0")),
-                        const SizedBox(width: 8),
-                        Text("120 Min",
-                            style: myFontStyle(
-                                color: ColorsConst.colorFromHex("#97A2B0"))),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                  ],
-                ),
-              ),
-            );
-          },
-          separatorBuilder: (context, index) => const SizedBox(width: 16),
+  Widget _popularRecipesSection(List<ProductModel> products) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            MediumTitleWidget(title: "Popular Recipes"),
+            const Spacer(),
+            Text(
+              'See All',
+              style: myFontStyle(
+                  weight: FontWeight.w800,
+                  color: ColorsConst.colorFromHex('#70B9BE')),
+            ),
+            const SizedBox(width: 23),
+          ],
         ),
-      ),
-    ],
-  );
-}
+        SizedBox(
+          height: 290.0.h,
+          child: ListView.separated(clipBehavior: Clip.none,
+            itemCount: products.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              final product = products[index];
+
+              return Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: ColorsConst.colorFromHex('1A063336'),
+                          blurRadius: 5,
+                          spreadRadius: 5,
+                          offset: const Offset(0, 0),
+                        ),
+                      ],
+                      color: Colors.white,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: CachedNetworkImage(
+                              imageUrl: product.image ?? "",
+                              width: 168.0.w,
+                              height: 128.0.h,
+                              fit: BoxFit.cover,
+                              placeholder: (context, url) =>
+                                  Center(child: CircularProgressIndicator()),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error, color: Colors.red),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          SizedBox(
+                            width: 168,
+                            child: Text(
+                              product.title ?? "Unknown Recipe",
+                              style: myFontStyle(
+                                  weight: FontWeight.w700, size: 16),
+                              maxLines: 2,
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          Row(
+                            children: [
+                              SvgPicture.asset(IconsConsts.calorieIcon),
+                              const SizedBox(width: 8),
+                              Text("120 Kcal",
+                                  style: myFontStyle(
+                                      color:
+                                          ColorsConst.colorFromHex("#97A2B0"))),
+                              const SizedBox(width: 8),
+                              CircleAvatar(
+                                  radius: 3,
+                                  backgroundColor:
+                                      ColorsConst.colorFromHex("#97A2B0")),
+                              const SizedBox(width: 8),
+                              Icon(Icons.access_time,
+                                  size: 16,
+                                  color: ColorsConst.colorFromHex("#97A2B0")),
+                              const SizedBox(width: 8),
+                              Text("120 Min",
+                                  style: myFontStyle(
+                                      color:
+                                          ColorsConst.colorFromHex("#97A2B0"))),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Consumer<HomeScreenAsyncProvider>(
+                      builder: (context, provider, child) {
+                    {
+                      return Positioned(
+                        right: 30,
+                        top: 30,
+                        child: GestureDetector(
+                          onTap: () {
+                            provider.addAndRemoveFavorites(product);
+                          },
+                          child: Container(
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: provider.favorites.contains(product)
+                                ? Icon(
+                                    Icons.favorite,
+                                    color: ColorsConst.colorFromHex('#70B9BE'),
+                                  )
+                                : Icon(Icons.favorite_border),
+                          ),
+                        ),
+                      );
+                    }
+                  }),
+                ],
+              );
+            },
+            separatorBuilder: (context, index) => const SizedBox(width: 16),
+          ),
+        ),
+      ],
+    );
+  }
 }

@@ -16,16 +16,21 @@ class CategoriesListWidget extends StatelessWidget {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: categories?.length??0,
-        itemBuilder: (context, index) => Container(
-          height: 41.0.h,
-          width: 119.0.w,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(40),
-              color: ColorsConst.colorFromHex('#70B9BE')),
-          child: Center(
-            child: Text(
-              categories?[index]??'',
-              style: myFontStyle(color: Colors.white),
+        itemBuilder: (context, index) => GestureDetector(
+          onTap: () {
+            provider.seleectCategory(categories?[index]??"");
+          },
+          child: Container(
+            height: 41.0.h,
+            width: 119.0.w,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(40),
+                color:categories?[index]==provider.selectedCategory? ColorsConst.colorFromHex('#70B9BE'): ColorsConst.colorFromHex('#F1F5F5')),
+            child: Center(
+              child: Text(
+                categories?[index]??'',
+                style: myFontStyle(color:categories?[index]==provider.selectedCategory? Colors.white:Colors.black),
+              ),
             ),
           ),
         ),

@@ -7,4 +7,11 @@ class IconsConsts {
   static String closeIcon = 'assets/icons/close_icon.svg';
   static String favoriteIcon = 'assets/icons/favorite_icon.svg';
   static String proteins = 'assets/icons/Proteins.png';
+  static String homeActive = 'assets/icons/home_active.svg';
+  static String homeInactive = 'assets/icons/home_inactive.svg';
+  static String searchActive = 'assets/icons/search_active.svg';
+  static String searchInactive = 'assets/icons/search_inactive.svg';
+  static String profileActive = 'assets/icons/profile_active.svg';
+  static String profileInactive = 'assets/icons/profile_inactive.svg';
+  static String notifications = 'assets/icons/notifications_active.svg';
 }

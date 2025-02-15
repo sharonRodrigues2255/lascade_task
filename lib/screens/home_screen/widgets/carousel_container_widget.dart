@@ -58,7 +58,7 @@ return Container(
               Row(
                 children: [
                   CircleAvatar(radius: 10,
-                  backgroundImage: AssetImage(ImageConsts.personImage),        ),
+                  backgroundImage: NetworkImage(ImageConsts.jamesSpaderImage),        ),
                   SizedBox(width: 8),
                   Text(
                     "James Spader",

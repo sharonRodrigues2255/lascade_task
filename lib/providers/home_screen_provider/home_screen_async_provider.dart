@@ -30,7 +30,7 @@ class HomeScreenAsyncProvider extends ChangeNotifier {
   }
 
   void addAndRemoveFavorites(ProductModel product) {
-    favorites ??;
+  
     if (favorites.contains(product)) {
       favorites.remove(product);
     } else{

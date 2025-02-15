@@ -5,12 +5,12 @@ import 'package:lascade_task/core/consts/icons_consts.dart';
 import 'package:lascade_task/core/helpers/colors.dart';
 import 'package:lascade_task/core/helpers/size_config.dart';
 import 'package:lascade_task/core/helpers/text_style.dart';
-import 'package:lascade_task/main.dart';
 import 'package:lascade_task/models/product_model.dart';
 import 'package:lascade_task/providers/home_screen_provider/home_screen_async_provider.dart';
 import 'package:lascade_task/screens/product_details/widgets/expandable_text.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/consts/image_consts.dart';
 import '../home_screen/widgets/medium_title_widget.dart';
 import '../widgets/recipies_small_card.dart';
 
@@ -55,17 +55,35 @@ class ProductDetails extends StatelessWidget {
           right: 24.0.w,
           child: Row(
             children: [
-              SvgPicture.asset(IconsConsts.closeIcon),
+              GestureDetector(onTap: () {
+                Navigator.of(context).pop();
+              },child: SvgPicture.asset(IconsConsts.closeIcon)),
               const Spacer(),
-              Container(
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: const Icon(Icons.favorite_border),
-              ),
+               Consumer<HomeScreenAsyncProvider>(
+                      builder: (context, provider, child) {
+                    {
+                      return GestureDetector(
+                        onTap: () {
+                          provider.addAndRemoveFavorites(product);
+                        },
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: provider.favorites.contains(product)
+                              ? Icon(
+                                  Icons.favorite,
+                                  color: ColorsConst.colorFromHex('#70B9BE'),
+                                )
+                              : Icon(Icons.favorite_border),
+                        ),
+                      );
+                    }
+                  }),
+        
             ],
           ),
         ),
@@ -168,6 +186,9 @@ Widget _buildProductInfo(ProductModel product) {
                       height: 48,
                       width: 48,
                       decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: NetworkImage('https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS8nNNj5iMAV4b7K_XtqPeuaheePw9GcyQagAOObR2jelozU9ysaUxnL9pJ65DFQzxgPH4Rs_G4WNBETlVM3hdynA'),
+                            fit: BoxFit.cover), 
                         borderRadius: BorderRadius.circular(12),
                         color: Colors.amberAccent,
                       ),
@@ -203,7 +224,10 @@ Widget _buildProductInfo(ProductModel product) {
           MediumTitleWidget(title: "Creator"),
           Row(
             children: [
-              const CircleAvatar(radius: 24, backgroundColor: Colors.white),
+               CircleAvatar(radius: 24,
+                                backgroundImage: NetworkImage(ImageConsts.jamesSpaderImage),       
+
+              ),
               const SizedBox(width: 8),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
